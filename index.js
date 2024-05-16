@@ -14,9 +14,19 @@ app.get("/api/image/random", async (req, res) => {
           }
         });
         console.log(response);
-        let image = response.data.urls.raw;
+        let image = response.data.urls.regular;
         console.log(image);
-        res.json(image);
+
+
+        const imgData = await axios({
+            method: "get",
+            url: image,
+            responseType: "arraybuffer"
+        })
+
+        res.json({
+            image: image.split("?crop")[0]
+        });
     }
     catch(error){
         console.log(error);
